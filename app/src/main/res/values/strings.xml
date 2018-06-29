@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TeacherApp</string>
+    <!--Login-Screen -->
+    <string name="mobile_no">Enter Mobile Number</string>
+    <string name="mobile_no_change">Need To Change Mobile No ?</string>
+    <!--Activation-Screen -->
+    <string name="activation_code">Enter Activation Code</string>
 </resources>
