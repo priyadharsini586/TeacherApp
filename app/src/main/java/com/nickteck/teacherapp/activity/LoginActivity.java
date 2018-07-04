@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements NetworkChangeRec
             @Override
             public void onClick(View v) {
                 isPhone = HelperClass.isValidMobile(editPhoneNo.getText().toString());
-                if (!isPhone) {
+                if (isPhone) {
                     checkLogin();
                 } else {
                     validation();
@@ -206,6 +206,8 @@ public class LoginActivity extends AppCompatActivity implements NetworkChangeRec
                                 dataBaseHandler.insertLoginTable("0",getMobileNo,deviceId);
                                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
+                            }else {
+                                Toast.makeText(getApplicationContext(),loginDetails.getStatus_message(),Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -262,6 +264,9 @@ public class LoginActivity extends AppCompatActivity implements NetworkChangeRec
                             } else if (loginDetails.getStatus_code().equals(Constants.NOT_VERIFIED)) {
                                 Toast.makeText(LoginActivity.this, loginDetails.getStatus_message(), Toast.LENGTH_SHORT).show();
                                 getOptApi();
+                            }else if (loginDetails.getStatus_code().equals(Constants.DEVICE_ID_NOT_MATCHED)){
+                                Toast.makeText(LoginActivity.this, loginDetails.getStatus_message(), Toast.LENGTH_SHORT).show();
+
                             }
 
 

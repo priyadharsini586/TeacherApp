@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nickteck.teacherapp.R;
 import com.nickteck.teacherapp.additional_class.AdditionalClass;
@@ -21,7 +23,8 @@ import com.nickteck.teacherapp.utilclass.Constants;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static ImageView imageView_drawer;
+    public  ImageView imageView_drawer;
+    TextView school_name_drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        imageView_drawer = (ImageView) findViewById(R.id.imageView_drawer);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -41,7 +44,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        imageView_drawer = headerView.findViewById(R.id.imageView_drawer);
+        school_name_drawer = headerView.findViewById(R.id.school_name_drawer);
         DashBoardFragment dashBoardFragment = new DashBoardFragment();
+        dashBoardFragment.getImages(imageView_drawer,school_name_drawer);
         AdditionalClass.replaceFragment(dashBoardFragment, Constants.DASHBOARDFRAGMENT,MainActivity.this);
     }
 

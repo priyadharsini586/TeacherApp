@@ -2,9 +2,17 @@ package com.nickteck.teacherapp.fragment;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
-import com.chootdev.blurimg.BlurImage;
 import com.nickteck.teacherapp.R;
 
 import com.nickteck.teacherapp.additional_class.HelperClass;
@@ -26,7 +33,10 @@ import com.nickteck.teacherapp.api.ApiInterface;
 import com.nickteck.teacherapp.database.DataBaseHandler;
 import com.nickteck.teacherapp.model.LoginDetails;
 import com.nickteck.teacherapp.utilclass.Constants;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,14 +60,17 @@ public class DashBoardFragment extends Fragment {
     boolean isNetworkConnected= false;
     LoginDetails loginDetails;
     public ImageView imageView_drawer,blur_background_image;
+    private  float BITMAP_SCALE = 0.4f;
+    private  float BLUR_RADIUS = 7.5f;
 
-
-
-    public DashBoardFragment() {
-        // Required empty public constructor
+    public DashBoardFragment( ) {
     }
 
 
+    public void getImages(ImageView imageView,TextView school_name_drawer ) {
+        this.imageView_drawer = imageView;
+        this.school_name_drawer = school_name_drawer;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -162,10 +175,7 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void setIntoView() {
-        getActivity().runOnUiThread(new Runnable() {
 
-            @Override
-            public void run() {
                 String getParentDetails = dataBaseHandler.getTeacherDetails();
                 try {
                     JSONObject getParentObject = new JSONObject(getParentDetails);
@@ -175,7 +185,7 @@ public class DashBoardFragment extends Fragment {
                         teacher_mname.setText(jsonObject.getString("name"));
                         main_sub.setText(jsonObject.getString("subject"));
                         String teacher_image = jsonObject.getString("photo");
-                        Picasso.with(getActivity()).load(Constants.TEACHER_PROFILE_IMAGE_URI+teacher_image)
+                        Picasso.get().load(Constants.TEACHER_PROFILE_IMAGE_URI+teacher_image)
                                 .placeholder(R.drawable.camera_icon).into(teacher_profile_image);
 
                         /*teacher_name_drawer = (TextView)getActivity().findViewById(R.id.teacher_name_drawer);
@@ -197,31 +207,88 @@ public class DashBoardFragment extends Fragment {
                         String school_logo_image = jsonObject.getString("logo");
 
                         blur_background_image = (ImageView)mainView.findViewById(R.id.blur_background_image);
+                        blur_background_image.setImageBitmap(null);
 
-                    BlurImage.withContext(getActivity()).blurFromUri(Constants.SCHOOL_IMAGE_URI+school_image_uri).
-                            into(blur_background_image);
 
-                        Picasso.with(getActivity()).load(Constants.SCHOOL_IMAGE_URI+school_image_uri)
+                        if (isNetworkConnected) {
+                            Picasso.get().load(Constants.SCHOOL_IMAGE_URI + school_image_uri).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    blur(bitmap, blur_background_image);
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+                        }else {
+                            Picasso.get().load(Constants.SCHOOL_IMAGE_URI + school_image_uri).networkPolicy(NetworkPolicy.OFFLINE).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    blur(bitmap, blur_background_image);
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+                        }
+
+                        Picasso.get().load(Constants.SCHOOL_IMAGE_URI+school_image_uri)
                                 .placeholder(R.drawable.camera_icon).into(school_image);
 
-                        imageView_drawer = (ImageView)getActivity().findViewById(R.id.imageView_drawer);
 
-                        school_name_drawer = (TextView)getActivity().findViewById(R.id.school_name_drawer);
+                        if (imageView_drawer != null) {
 
-                        Picasso.with(getActivity()).load(Constants.SCHOOL_IMAGE_URI+school_logo_image)
-                                .placeholder(R.drawable.camera_icon).into(imageView_drawer);
+                            Picasso.get().load(Constants.SCHOOL_IMAGE_URI + school_logo_image)
+                                    .placeholder(R.drawable.camera_icon).into(imageView_drawer);
+                        }
 
-                        school_name_drawer.setText(jsonObject.getString("school_name"));
+                        if (school_name_drawer != null) {
+                            school_name_drawer.setText(jsonObject.getString("school_name"));
+                        }
 
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-            }
-        });
+
 
     }
 
 
+
+
+    private  void blur(Bitmap image,ImageView imageView) {
+        int width = Math.round(image.getWidth() * BITMAP_SCALE);
+        int height = Math.round(image.getHeight() * BITMAP_SCALE);
+
+        Bitmap inputBitmap = Bitmap.createScaledBitmap(image, width, height, false);
+        Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
+
+        RenderScript rs = RenderScript.create(getActivity());
+        ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
+        Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
+        theIntrinsic.setRadius(BLUR_RADIUS);
+        theIntrinsic.setInput(tmpIn);
+        theIntrinsic.forEach(tmpOut);
+        tmpOut.copyTo(outputBitmap);
+
+        imageView.setImageBitmap(outputBitmap);
+
+    }
 }
