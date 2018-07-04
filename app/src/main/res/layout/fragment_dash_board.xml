@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nickteck.teacherapp.activity.DashBoardActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.nickteck.teacherapp.activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,15 +13,20 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/background_blur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/schoobgback"
             android:layout_weight="0.5">
 
             <ImageView
+                android:id="@+id/blur_background_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/schoobgback"/>
+
+            <ImageView
                 android:id="@+id/school_image"
-                android:background="@drawable/school_back_ground_design"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
@@ -28,14 +34,13 @@
                 android:layout_gravity="center"
                 android:src="@mipmap/forebackground"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <View
+        <!--<View
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"/>
-
+            android:background="@color/grey"/>-->
 
 
         <LinearLayout
@@ -43,7 +48,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -55,6 +60,21 @@
                     android:text="Logged-In Details"
                     android:gravity="center"
                     android:textSize="30dp"/>
+            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/teacher_profile_image"
+                    android:layout_width="@dimen/teacher_image_width"
+                    android:layout_height="@dimen/teacher_image_height"
+                    android:src="@mipmap/schoo" />
+
             </LinearLayout>
 
             <android.support.v7.widget.CardView
@@ -66,24 +86,65 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5">
+
+                        <TextView
+                            android:id="@+id/school_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="School Name :"
+                            android:textSize="@dimen/teacher_name_text_size" />
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
+                        android:layout_weight="0.5">
+
+                        <TextView
+                            android:id="@+id/school_mname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nick Tech School"
+                            android:textSize="@dimen/teacher_name_text_size" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
                         android:weightSum="1">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5">
+
                             <TextView
                                 android:id="@+id/teacher_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="Teacher Name :"
                                 android:gravity="center"
-                                android:textSize="25dp" />
+                                android:text="Teacher Name :"
+                                android:textSize="@dimen/teacher_name_text_size" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -92,15 +153,13 @@
                             android:layout_weight="0.5">
 
                             <TextView
-                                android:id="@+id/teacher"
+                                android:id="@+id/teacher_mname"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="ARAVINDRAJ "
-                                android:textSize="25dp" />
+                                android:text="ARAVINDRAJ"
+                                android:textSize="@dimen/teacher_name_text_size" />
 
                         </LinearLayout>
-
-
 
 
                     </LinearLayout>
@@ -108,21 +167,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
                         android:weightSum="1">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5">
+
                             <TextView
                                 android:id="@+id/Designation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="Designation :"
                                 android:gravity="center"
-                                android:textSize="25dp" />
+                                android:text="Designation :"
+                                android:textSize="@dimen/teacher_name_text_size" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -135,32 +196,33 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Class Teacher"
-                                android:textSize="25dp" />
+                                android:textSize="@dimen/teacher_name_text_size" />
 
                         </LinearLayout>
 
 
-
-
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
                         android:weightSum="1">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5">
+
                             <TextView
                                 android:id="@+id/major_sub"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="Main Subject :"
                                 android:gravity="center"
-                                android:textSize="25dp" />
+                                android:text="Main Subject :"
+                                android:textSize="@dimen/teacher_name_text_size" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -173,7 +235,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="History"
-                                android:textSize="25dp" />
+                                android:textSize="@dimen/teacher_name_text_size" />
 
                         </LinearLayout>
                     </LinearLayout>

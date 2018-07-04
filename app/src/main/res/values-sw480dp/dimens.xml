@@ -8,6 +8,12 @@
     <dimen name="login_component_padding">20dp</dimen>
 
 
+    <!-- dashboard fragment -->
+    <dimen name="teacher_image_width">135dp</dimen>
+    <dimen name="teacher_image_height">135dp</dimen>
+    <dimen name="teacher_name_text_size">20dp</dimen>
+
+
 
 
 </resources>

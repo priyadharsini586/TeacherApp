@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.nickteck.teacherapp"
-        minSdkVersion 14
+        minSdkVersion 18
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -30,4 +30,17 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.android.support:cardview-v7:22.2.0'
     compile 'com.androidadvance:topsnackbar:1.1.1'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.github.stfalcon:smsverifycatcher:0.3.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.chootdev:blurimg:1.0.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
+
+
+
+
 }

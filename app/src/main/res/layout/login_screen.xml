@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context="com.nickteck.teacherapp.activity.LoginActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/sclMainView"
         android:layout_width="wrap_content"
@@ -56,6 +57,19 @@
                     android:padding="@dimen/login_component_padding"
                     android:text="Submit"
                     android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnActivationSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_corner"
+                    android:gravity="center"
+                    android:padding="@dimen/login_component_padding"
+                    android:text="Submit"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone"/>
+
+
 
             </LinearLayout>
         </LinearLayout>

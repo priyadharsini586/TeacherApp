@@ -8,5 +8,18 @@
     <dimen name="login_component_padding">7dp</dimen>
 
 
+    <!--student attendence image  -->
+    <dimen name="student_attendence_image__width">50dp</dimen>
+    <dimen name="student_attendence_image__height">50dp</dimen>
+
+    <!--student attendence image  -->
+    <dimen name="checkbox_green_image__width">25dp</dimen>
+    <dimen name="checkbox_green_image__height">25dp</dimen>
+
+    <!-- dashboard fragment -->
+    <dimen name="teacher_image_width">75dp</dimen>
+    <dimen name="teacher_image_height">75dp</dimen>
+    <dimen name="teacher_name_text_size">17dp</dimen>
+
 
 </resources>
