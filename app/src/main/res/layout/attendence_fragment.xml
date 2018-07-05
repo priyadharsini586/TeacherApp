@@ -24,9 +24,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/edit_text_grey_design"
+                android:layout_marginRight="5dp"
                 android:layout_weight="0.5">
 
                 <Spinner
+                    android:id="@+id/select_class_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -36,9 +39,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/edit_text_grey_design"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="0.5">
 
                 <Spinner
+                    android:id="@+id/select_sec_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </Spinner>
@@ -99,7 +105,7 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
@@ -113,7 +119,13 @@
 
             </android.support.v7.widget.RecyclerView>
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
 
 
         <LinearLayout
