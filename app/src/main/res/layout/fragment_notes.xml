@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.nickteck.teacherapp.fragment.NotesFragment"
     android:orientation="vertical">
 
@@ -15,12 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.5">
+            android:layout_weight="0.6">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -28,7 +30,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:weightSum="3">
+                    android:weightSum="2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -38,9 +40,13 @@
                         <Spinner
                             android:id="@+id/class_spinner"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            >
 
                         </Spinner>
+
 
                     </LinearLayout>
 
@@ -58,24 +64,30 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+
+                </LinearLayout>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <Spinner
-                            android:id="@+id/option_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                        </Spinner>
-
-                    </LinearLayout>
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:text="All"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Selected"/>
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="0.25"
+                android:layout_weight="0.3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
@@ -93,7 +105,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:textSize="19sp"
                         android:text="SELECTED STUDENT"
                         android:background="@drawable/edit_text_grey_design"
                         android:gravity="center">
@@ -102,17 +114,115 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:alignItems="stretch"
+                    app:alignContent="stretch">
+
+                        <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="aravind"
-                        android:textSize="20dp"/>
+                        android:textSize="17sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/><TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aravind"
+                    android:textSize="17sp"/>
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="aravind"
+                        android:textSize="17sp"/>
+                </com.google.android.flexbox.FlexboxLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -123,7 +233,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.5">
+            android:layout_weight="0.4">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,7 +258,7 @@
                         android:background="@drawable/edit_text_grey_design"
                         android:gravity="center"
                         android:text="Message"
-                        android:textSize="25dp">
+                        android:textSize="19sp">
 
                     </TextView>
 
@@ -217,28 +327,9 @@
                                 android:text="Cancel"/>
 
                         </LinearLayout>
-
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
-
-
-
-
-
 </LinearLayout>

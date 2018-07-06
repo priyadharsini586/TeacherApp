@@ -4,6 +4,7 @@ package com.nickteck.teacherapp.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.nickteck.teacherapp.R;
 
+import com.nickteck.teacherapp.activity.LoginActivity;
 import com.nickteck.teacherapp.additional_class.HelperClass;
 import com.nickteck.teacherapp.api.ApiClient;
 import com.nickteck.teacherapp.api.ApiInterface;
@@ -147,9 +149,15 @@ public class DashBoardFragment extends Fragment {
                                 JSONObject teacherObject = loginDetails.toJSON();
                                 JSONObject schoolObject = loginDetails.toJSONS();
                                 dataBaseHandler.dropTeacherDetails();
-                                dataBaseHandler.insertTeacherDetails(loginDetails.getTeacher_details().get(0).getId(),teacherObject.toString(),schoolObject.toString());
+                                dataBaseHandler.insertTeacherDetails(loginDetails.getTeacher_details().get(0).getId(), teacherObject.toString(), schoolObject.toString());
 
                                 setIntoView();
+                            }else if (loginDetails.getStatus_code().equals(Constants.DEVICE_ID_NOT_MATCHED)){
+                                dataBaseHandler.dropLoginDetails();
+                                dataBaseHandler.dropTeacherDetails();
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
                             }
                         }
                     }

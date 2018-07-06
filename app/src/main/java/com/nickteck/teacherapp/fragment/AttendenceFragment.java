@@ -171,27 +171,22 @@ public class AttendenceFragment extends Fragment {
     }
 
     private void setValueToSpinner(final ArrayList<String> class_name_arrayList){
-        // setting class name alone in the adapter
         ArrayAdapter<String> classNameAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
                 class_name_arrayList);
 
         classNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // setting default value for the class name arraylist
         String defaultValue = "Select Class";
         class_name_arrayList.add(0,defaultValue);
 
         select_class_spinner.setAdapter(classNameAdapter);
         int selectionPosition= classNameAdapter.getPosition("Select Class");
-        // by default showing default value in the spinner
         select_class_spinner.setSelection(selectionPosition);
         select_class_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                getSelectedClassValue = class_name_arrayList.get(position);
-
-              // in case user again clicks the select class to handle that added default value in the sec arraylist
-              if(getSelectedClassValue.equals("Select Class")){
+               if(getSelectedClassValue.equals("Select Class")){
                   section_arrayListText = new ArrayList<>();
                   section_arrayListText.add(0,"Select Sec");
                   SetValueSectionSpinnerText(section_arrayListText);

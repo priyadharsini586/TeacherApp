@@ -78,6 +78,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
+
+    public void dropLoginDetails(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "DELETE  FROM " + LOGIN_CHECK;
+        db.execSQL(selectQuery);
+        db.close();
+
+    }
+
     public void insertTeacherDetails(String teacherId,String teacherDetails,String schoolDetails){
         SQLiteDatabase db = this.getWritableDatabase();
 

@@ -6,6 +6,8 @@ package com.nickteck.teacherapp.utilclass;
 
 public class Constants {
 
+    public static final String CLASS = "Classes";
+    public static final String SECTION = "Sections";
     public static String NETWORK_CONNECTED = "network connected";
     public static String NETWORK_NOT_CONNECTED = "network not connected";
     public static String MESSAGE = "message";
