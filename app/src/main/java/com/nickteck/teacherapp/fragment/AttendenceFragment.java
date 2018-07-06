@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +14,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.nickteck.teacherapp.R;
+import com.nickteck.teacherapp.adapter.AttendenceAdapter;
 import com.nickteck.teacherapp.additional_class.HelperClass;
 import com.nickteck.teacherapp.api.ApiClient;
 import com.nickteck.teacherapp.api.ApiInterface;
 import com.nickteck.teacherapp.model.AttendenceClassDetails;
+import com.nickteck.teacherapp.model.StudentList;
 import com.nickteck.teacherapp.utilclass.Constants;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,6 +55,10 @@ public class AttendenceFragment extends Fragment {
     private int getSelectedItem;
     private String getSelectedSectionValue;
     private String getSelectedClassValue;
+    ArrayList<StudentList.StudentDetails> studentDetailsArrayList;
+    RecyclerView attendence_recyclerview;
+    AttendenceAdapter attendenceAdapter;
+    TextView txtNoDataTextview;
 
 
     public AttendenceFragment() {
@@ -70,12 +80,18 @@ public class AttendenceFragment extends Fragment {
     private void init() {
         class_name_arrayList = new ArrayList<>();
         commonArrayList = new ArrayList<>();
+        studentDetailsArrayList = new ArrayList<>();
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         select_class_spinner = (Spinner) view.findViewById(R.id.select_class_spinner);
+        txtNoDataTextview = (TextView) view.findViewById(R.id.txtNoDataTextview);
         select_sec_spinner = (Spinner) view.findViewById(R.id.select_sec_spinner);
         progress = (ProgressBar) view.findViewById(R.id.progress);
+        attendence_recyclerview = (RecyclerView) view.findViewById(R.id.attendence_recyclerview);
+
+        txtNoDataTextview.setVisibility(View.INVISIBLE);
+        progress.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -144,6 +160,7 @@ public class AttendenceFragment extends Fragment {
                 @Override
                 public void onFailure(Call<AttendenceClassDetails> call, Throwable t) {
 
+
                 }
             });
 
@@ -192,7 +209,7 @@ public class AttendenceFragment extends Fragment {
                           // geeting section for specific class selected
                           SetValueSectionSpinner(section_arrayList);
                       }else {
-                          Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                          //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                       }
                   }
 
@@ -237,25 +254,19 @@ public class AttendenceFragment extends Fragment {
                     getStudentListApi(getSelectedClassValue,getSelectedSectionValue);
 
                 }
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-
-
     }
 
     private boolean checkValue(String getSelectedSectionValue) {
         if(getSelectedSectionValue.equals("Select Sec")){
-            Toast.makeText(getActivity(), "reachd false", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
+         return true;
 
     }
 
@@ -263,15 +274,63 @@ public class AttendenceFragment extends Fragment {
         if (isNetworkConnected) {
             apiInterface = ApiClient.getClient().create(ApiInterface.class);
             JSONObject jsonObject = new JSONObject();
-            
+            try{
+                jsonObject.put("class_name",getSelectedClassValue);
+                jsonObject.put("section",getSelectedSectionValue);
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            Call<StudentList> call = apiInterface.getStudentList(jsonObject);
+            call.enqueue(new Callback<StudentList>() {
+
+                @Override
+                public void onResponse(Call<StudentList> call, Response<StudentList> response) {
+                    if (response.isSuccessful()) {
+                        progress.setVisibility(View.VISIBLE);
+                        StudentList studentList = response.body();
+                        if (studentList.getStatus_code() != null) {
+                            if(studentList.getStatus_code().equals(Constants.SUCESS)) {
+                                for(int i=0; i<studentList.getStudent_details().size();i++){
+                                    StudentList.StudentDetails studentDetails = studentList.getStudent_details().get(i);
+                                    studentDetails.setRoll_no(studentList.getStudent_details().get(i).getRoll_no());
+                                    studentDetails.setStudent_id(studentList.getStudent_details().get(i).getStudent_id());
+                                    studentDetails.setStudent_name(studentList.getStudent_details().get(i).getStudent_name());
+                                    studentDetails.setStudent_photo(studentList.getStudent_details().get(i).getStudent_photo());
+                                    studentDetailsArrayList.add(studentDetails);
+                                }
+                                if(studentDetailsArrayList.size()>0){
+                                    txtNoDataTextview.setVisibility(View.INVISIBLE);
+                                    progress.setVisibility(View.INVISIBLE);
+                                    setAdapter();
+                                }
+                            }else {
+                                txtNoDataTextview.setVisibility(View.VISIBLE);
+                                progress.setVisibility(View.INVISIBLE);
+                                Toast.makeText(getActivity(), "Students are Not Available for this class and section", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<StudentList> call, Throwable t) {
+
+                }
+            });
+
+        }else {
+            Toast.makeText(getActivity(), "Network not connected", Toast.LENGTH_SHORT).show();
         }
+    }
 
-
-
-
-
-
-
+    private void setAdapter() {
+        attendenceAdapter  = new AttendenceAdapter(getActivity(),studentDetailsArrayList,getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        attendence_recyclerview.setLayoutManager(mLayoutManager);
+        attendence_recyclerview.setAdapter(attendenceAdapter);
 
     }
 

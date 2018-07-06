@@ -2,6 +2,7 @@ package com.nickteck.teacherapp.api;
 
 import com.nickteck.teacherapp.model.AttendenceClassDetails;
 import com.nickteck.teacherapp.model.LoginDetails;
+import com.nickteck.teacherapp.model.StudentList;
 
 import org.json.JSONObject;
 
@@ -30,6 +31,10 @@ public interface ApiInterface {
 
     @POST("get_class_details.php")
     Call<AttendenceClassDetails> getClassDetails();
+
+    @FormUrlEncoded
+    @POST("student_list.php")
+    Call<StudentList> getStudentList(@Field("x") JSONObject object);
 
 
 }

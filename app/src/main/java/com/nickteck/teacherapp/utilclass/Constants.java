@@ -22,6 +22,7 @@ public class Constants {
 
     public static String TEACHER_PROFILE_IMAGE_URI = "http://docpat-app.com/school_app/images/teachers/";
     public static String SCHOOL_IMAGE_URI = "http://docpat-app.com/school_app/images/school/";
+    public static String STUDENT_IMAGE_URI = "http://docpat-app.com/school_app/images/students/";
 
 
 

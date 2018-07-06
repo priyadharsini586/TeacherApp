@@ -21,5 +21,11 @@
     <dimen name="teacher_image_height">75dp</dimen>
     <dimen name="teacher_name_text_size">17dp</dimen>
 
+    <!--student name size  -->
+    <dimen name="student_name_size">17dp</dimen>
+    <dimen name="student_name_roll_no">15dp</dimen>
+
+
+
 
 </resources>

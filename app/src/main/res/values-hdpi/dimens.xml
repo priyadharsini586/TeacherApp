@@ -13,4 +13,12 @@
 
     <dimen name="teacher_name_text_size">17dp</dimen>
 
+    <!--student attendence image  -->
+    <dimen name="student_attendence_image__width">70dp</dimen>
+    <dimen name="student_attendence_image__height">70dp</dimen>
+
+    <!--student name size  -->
+    <dimen name="student_name_size">17dp</dimen>
+    <dimen name="student_name_roll_no">15dp</dimen>
+
 </resources>
