@@ -7,11 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -59,6 +62,7 @@ public class AttendenceFragment extends Fragment {
     RecyclerView attendence_recyclerview;
     AttendenceAdapter attendenceAdapter;
     TextView txtNoDataTextview;
+    EditText student_search_edit;
 
 
     public AttendenceFragment() {
@@ -73,9 +77,12 @@ public class AttendenceFragment extends Fragment {
         view =  inflater.inflate(R.layout.attendence_fragment, container, false);
 
         init();
+        filterData();
 
         return view;
     }
+
+
 
     private void init() {
         class_name_arrayList = new ArrayList<>();
@@ -89,6 +96,7 @@ public class AttendenceFragment extends Fragment {
         select_sec_spinner = (Spinner) view.findViewById(R.id.select_sec_spinner);
         progress = (ProgressBar) view.findViewById(R.id.progress);
         attendence_recyclerview = (RecyclerView) view.findViewById(R.id.attendence_recyclerview);
+        student_search_edit = (EditText) view.findViewById(R.id.student_search_edit);
 
         txtNoDataTextview.setVisibility(View.INVISIBLE);
         progress.setVisibility(View.INVISIBLE);
@@ -326,8 +334,35 @@ public class AttendenceFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         attendence_recyclerview.setLayoutManager(mLayoutManager);
         attendence_recyclerview.setAdapter(attendenceAdapter);
+        attendenceAdapter.notifyDataSetChanged();
 
     }
+
+    private void filterData() {
+
+        student_search_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                attendenceAdapter.getFilter().filter(s.toString());
+
+               // attendence_recyclerview.setAdapter(attendenceAdapter);
+                attendenceAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+
 
 
 }

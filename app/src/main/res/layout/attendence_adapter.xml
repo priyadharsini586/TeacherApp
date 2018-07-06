@@ -78,6 +78,11 @@
                     android:text="Present"
                     android:textColor="@color/white"/>
 
+                <TextView
+                    android:id="@+id/student_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
 

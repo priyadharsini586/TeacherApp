@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,21 +19,26 @@ import com.nickteck.teacherapp.utilclass.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by admin on 7/2/2018.
  */
 
-public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> {
+public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> implements Filterable {
 
     Activity activity;
-    ArrayList<StudentList.StudentDetails> studentDetailsArrayList;
+    ArrayList<StudentList.StudentDetails> studentDetailsArrayList = null;
+    ArrayList<StudentList.StudentDetails> mfilteredDataDetailsArrayList = null;
     Context context;
+    private ItemFilter mFilter = new ItemFilter();
 
     public AttendenceAdapter(Activity activity, ArrayList<StudentList.StudentDetails> studentDetailsArrayList, Context context) {
         this.activity = activity;
         this.studentDetailsArrayList = studentDetailsArrayList;
+        this.mfilteredDataDetailsArrayList = studentDetailsArrayList;
         this.context = context;
+
     }
 
     @Override
@@ -51,6 +58,12 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         holder.student_name.setText(studentDetailsArrayList.get(position).getStudent_name());
         holder.student_roll_no.setText(studentDetailsArrayList.get(position).getRoll_no());
 
+        holder.button_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -59,13 +72,15 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         return studentDetailsArrayList.size();
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView student_image;
         private TextView student_name;
         private TextView student_roll_no;
         private Button button_status;
-
+        private TextView student_id;
 
 
         public ViewHolder(View itemView) {
@@ -75,7 +90,42 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
             student_name = itemView.findViewById(R.id.student_name);
             student_roll_no = itemView.findViewById(R.id.student_roll_no);
             button_status = itemView.findViewById(R.id.button_status);
+            student_id = itemView.findViewById(R.id.student_id);
 
+        }
+    }
+
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+            FilterResults results = new FilterResults();
+            final List<StudentList.StudentDetails> list = studentDetailsArrayList;
+            int count = list.size();
+
+            final ArrayList<String> nlist = new ArrayList<String>(count);
+            String filterableString ;
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i).getStudent_name();
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(filterableString);
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mfilteredDataDetailsArrayList = (ArrayList<StudentList.StudentDetails>) results.values;
+            notifyDataSetChanged();
 
         }
     }
