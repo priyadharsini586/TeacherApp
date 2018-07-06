@@ -80,7 +80,7 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         private TextView student_name;
         private TextView student_roll_no;
         private Button button_status;
-        private TextView student_id;
+
 
 
         public ViewHolder(View itemView) {
@@ -90,7 +90,7 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
             student_name = itemView.findViewById(R.id.student_name);
             student_roll_no = itemView.findViewById(R.id.student_roll_no);
             button_status = itemView.findViewById(R.id.button_status);
-            student_id = itemView.findViewById(R.id.student_id);
+
 
         }
     }

@@ -14,14 +14,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="1"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:layout_weight="0.38">
+                android:layout_weight="1">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/student_image"
@@ -35,7 +34,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.23"
+                android:layout_weight="1"
 
                 android:gravity="center"
                 android:orientation="vertical">
@@ -57,33 +56,19 @@
                     android:textSize="@dimen/student_name_roll_no" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.39"
+                android:layout_weight="1"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                >
-
-               <!-- <ImageView
-                    android:id="@+id/checkbox"
-                    android:layout_width="@dimen/checkbox_green_image__width"
-                    android:layout_height="@dimen/checkbox_green_image__height"
-                    android:src="@mipmap/checked_green" />-->
-                <Button
-                    android:id="@+id/button_status"
-                    android:layout_width="match_parent"
+                android:gravity="center">
+                <CheckBox
+                    android:id="@+id/chkSelect"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_button"
-                    android:text="Present"
-                    android:textColor="@color/white"/>
-
-
+                    android:text="Select"
+                    android:textColor="@android:color/black"/>
             </LinearLayout>
-
-
-
         </LinearLayout>
     </LinearLayout>
     <View

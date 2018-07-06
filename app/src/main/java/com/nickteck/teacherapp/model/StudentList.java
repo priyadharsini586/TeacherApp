@@ -33,6 +33,7 @@ public class StudentList {
         private String roll_no;
         private String student_name;
         private String student_photo;
+        private boolean isChecked = true;
 
 
         public String getStudent_id() {
@@ -65,6 +66,14 @@ public class StudentList {
 
         public void setStudent_photo(String student_photo) {
             this.student_photo = student_photo;
+        }
+
+        public boolean isChecked() {
+            return isChecked;
+        }
+
+        public void setChecked(boolean checked) {
+            isChecked = checked;
         }
     }
 

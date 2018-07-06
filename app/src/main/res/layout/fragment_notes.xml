@@ -71,18 +71,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:id="@+id/radioOptions">
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="All"
-                        android:checked="true"/>
+                        android:checked="true"
+                        android:id="@+id/radioAll"/>
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Selected"/>
+                        android:text="Selected"
+                        android:id="@+id/radioSelected"/>
                 </RadioGroup>
             </LinearLayout>
 
@@ -119,109 +122,11 @@
                     android:layout_height="wrap_content"
                     app:flexWrap="wrap"
                     app:alignItems="stretch"
-                    app:alignContent="stretch">
+                    app:alignContent="stretch"
+                    android:id="@+id/flexLayout">
 
-                        <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/><TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="aravind"
-                    android:textSize="17sp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aravind"
-                        android:textSize="17sp"/>
                 </com.google.android.flexbox.FlexboxLayout>
 
             </LinearLayout>
@@ -269,11 +174,11 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:background="@android:color/transparent"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
