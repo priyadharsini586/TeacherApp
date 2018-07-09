@@ -12,13 +12,17 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nickteck.teacherapp.R;
+import com.nickteck.teacherapp.fragment.AttendenceFragment;
+import com.nickteck.teacherapp.model.StudentIdAttendenceStatus;
 import com.nickteck.teacherapp.model.StudentList;
 import com.nickteck.teacherapp.utilclass.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,10 +32,16 @@ import java.util.List;
 public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.ViewHolder> implements Filterable {
 
     Activity activity;
-    ArrayList<StudentList.StudentDetails> studentDetailsArrayList = null;
-    ArrayList<StudentList.StudentDetails> mfilteredDataDetailsArrayList = null;
+    ArrayList<StudentList.StudentDetails> studentDetailsArrayList = new ArrayList<>();
+    ArrayList<StudentList.StudentDetails> mfilteredDataDetailsArrayList = new ArrayList<>();
     Context context;
     private ItemFilter mFilter = new ItemFilter();
+
+    String button_state;
+    private List<String> studentIdArrayListData = new ArrayList<>();
+    private List<String> studentAttendenceListData = new ArrayList<>();
+
+    private List<StudentIdAttendenceStatus.StudentAttendeceDetails> studentIdArrayListData1 = new ArrayList<>();
 
     public AttendenceAdapter(Activity activity, ArrayList<StudentList.StudentDetails> studentDetailsArrayList, Context context) {
         this.activity = activity;
@@ -49,27 +59,103 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        final StudentList.StudentDetails studentDetails = mfilteredDataDetailsArrayList.get(position);
         Picasso.get().load(Constants.STUDENT_IMAGE_URI+
-                studentDetailsArrayList.get(position).getStudent_photo())
+                studentDetails.getStudent_photo())
                 .placeholder(R.drawable.camera_icon)
                 .into(holder.student_image);
 
-        holder.student_name.setText(studentDetailsArrayList.get(position).getStudent_name());
-        holder.student_roll_no.setText(studentDetailsArrayList.get(position).getRoll_no());
+        holder.student_name.setText(studentDetails.getStudent_name());
+        holder.student_roll_no.setText(studentDetails.getRoll_no());
+
+        if(studentDetails.getAttendance().equals("")){
+            holder.button_status.setBackgroundResource(R.drawable.custom_attendance_green);
+            for(int i=0; i<studentDetails.getStudent_id().length(); i++){
+                StudentIdAttendenceStatus.StudentAttendeceDetails idAttendenceStatus = new StudentIdAttendenceStatus.StudentAttendeceDetails(studentDetails.getStudent_id(),"1");
+                studentIdArrayListData1.add(idAttendenceStatus);
+                /*studentIdArrayListData.add(studentDetails.getStudent_id());
+                studentAttendenceListData.add("1");*/
+            }
+            setAttendenceArrayList();
+
+        } else if(studentDetails.getAttendance().equals("1")){
+            holder.button_status.setBackgroundResource(R.drawable.custom_attendance_green);
+
+        }else if(studentDetails.getAttendance().equals("0")){
+            holder.button_status.setBackgroundResource(R.drawable.custom_attendance_orange);
+
+        }else if(studentDetails.getAttendance().equals("-1")){
+            holder.button_status.setBackgroundResource(R.drawable.custom_attendance_red);
+        }
+
 
         holder.button_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String getStudentName = studentDetails.getStudent_name();
+                String getStudent_id = studentDetails.getStudent_id();
+                String getStudent_roll = studentDetails.getRoll_no();
+
+                if(studentDetails.getAttendance().equals("1")){
+                    holder.button_status.setBackgroundResource(R.drawable.custom_attendance_orange);
+                    holder.button_status.setText("Leave");
+                    button_state = "0";
+                }/*else if(){
+
+                }*/
+
+
 
             }
         });
 
     }
 
+
+
+    private void setAttendenceArrayList() {
+        ArrayList<String> row = new ArrayList<>();
+       /* String strArray1;
+
+        String[][] strArray = new String[studentIdArrayListData.size()][studentAttendenceListData.size()];
+
+        for(int i=0; i<studentIdArrayListData.size();i++){
+            for(int j=0; j<studentAttendenceListData.size();j++){
+                strArray1 = Arrays.deepToString(strArray);
+
+                Toast.makeText(context, ""+strArray1, Toast.LENGTH_SHORT).show();
+
+            }
+
+        }*/
+        /*String[] strArray = new String[studentIdArrayListData.size()];
+        strArray = studentIdArrayListData.toArray(strArray);
+        Toast.makeText(context, ""+strArray, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, ""+strArray, Toast.LENGTH_SHORT).show();*/
+
+
+
+
+        String[][] array = new String[studentIdArrayListData1.size()][];
+        for (int i = 0; i < studentIdArrayListData1.size(); i++) {
+            row.add(studentIdArrayListData1.get(i).getAttendenceStatus());
+            array[i] = row.toArray(new String[row.size()]);
+        }
+
+
+     /*//   student_id_data = new String[Integer.parseInt(studentDetails.getStudent_id())];
+        student_id = String.valueOf(studentDetailsArrayList.toArray(new String[]{student_id}));
+        Toast.makeText(context, ""+student_id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, ""+student_id, Toast.LENGTH_SHORT).show();*/
+
+
+
+    }
+
     @Override
     public int getItemCount() {
-        return studentDetailsArrayList.size();
+        return mfilteredDataDetailsArrayList.size();
     }
 
 
@@ -103,29 +189,39 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String filterString = constraint.toString().toLowerCase();
-            FilterResults results = new FilterResults();
-            final List<StudentList.StudentDetails> list = studentDetailsArrayList;
-            int count = list.size();
 
-            final ArrayList<String> nlist = new ArrayList<String>(count);
-            String filterableString ;
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i).getStudent_name();
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
+            if (filterString.isEmpty()) {
+                mfilteredDataDetailsArrayList = studentDetailsArrayList;
+            }else {
+                ArrayList<StudentList.StudentDetails> filteredList = new ArrayList<>();
+                for (StudentList.StudentDetails row : studentDetailsArrayList) {
+                    if (row.getStudent_name().toLowerCase().contains(filterString.toLowerCase()) ||
+                            row.getRoll_no().contains(filterString)) {
+                        filteredList.add(row);
+                    }
+
                 }
+                mfilteredDataDetailsArrayList = filteredList;
             }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = mfilteredDataDetailsArrayList;
+            filterResults.count = mfilteredDataDetailsArrayList.size();
+            return filterResults;
 
-            results.values = nlist;
-            results.count = nlist.size();
-
-            return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mfilteredDataDetailsArrayList = (ArrayList<StudentList.StudentDetails>) results.values;
-            notifyDataSetChanged();
+            if(results.count == 0){
+                mfilteredDataDetailsArrayList.clear();
+                AttendenceFragment.txtNoDataTextview.setVisibility(View.VISIBLE);
+            }else {
+                mfilteredDataDetailsArrayList = (ArrayList<StudentList.StudentDetails>) results.values;
+                AttendenceFragment.txtNoDataTextview.setVisibility(View.GONE);
+                notifyDataSetChanged();
+
+            }
+
 
         }
     }

@@ -6,6 +6,9 @@ package com.nickteck.teacherapp.utilclass;
 
 public class Constants {
 
+    public static String GCMURL = "https://android.googleapis.com/gcm/send";
+    public static final String API_KEY = "AAAAs8l_iiY:APA91bEAFXt47R4MRR7GeS8U4zr8gAC2KSTilko4zVnwP-w6WYj_9joTsAD2jtDr3UV3HTOEHarMqYYHGPm5J_4whVnrJ-bRk5sHPlFKalMmBONWXhgZBfIVckD-uv0SR3aRqIeisGY_2eeYnwH1J_tTnM08FKV-8Q";
+
     public static final String CLASS = "Classes";
     public static final String SECTION = "Sections";
     public static String NETWORK_CONNECTED = "network connected";

@@ -20,4 +20,6 @@
     <dimen name="student_name_size">25dp</dimen>
     <dimen name="student_name_roll_no">20dp</dimen>
 
+    <dimen name="student_search_height">40dp</dimen>
+
 </resources>

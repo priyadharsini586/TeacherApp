@@ -96,8 +96,6 @@ public class DashBoardFragment extends Fragment {
         school_mname = (TextView) mainView.findViewById(R.id.school_mname);
         blur_background_image = (ImageView)mainView.findViewById(R.id.blur_background_image);
 
-
-
     }
 
     @Override

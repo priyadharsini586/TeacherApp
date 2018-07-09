@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public class StudentList {
 
     private String Status_code;
+    private String attendnce_taken;
+    private String tot_absent;
+    private String teacher_name;
     private ArrayList<StudentDetails> student_details;
 
     public ArrayList<StudentDetails> getStudent_details() {
@@ -27,12 +30,37 @@ public class StudentList {
         Status_code = status_code;
     }
 
+    public String getAttendnce_taken() {
+        return attendnce_taken;
+    }
+
+    public void setAttendnce_taken(String attendnce_taken) {
+        this.attendnce_taken = attendnce_taken;
+    }
+
+    public String getTot_absent() {
+        return tot_absent;
+    }
+
+    public void setTot_absent(String tot_absent) {
+        this.tot_absent = tot_absent;
+    }
+
+    public String getTeacher_name() {
+        return teacher_name;
+    }
+
+    public void setTeacher_name(String teacher_name) {
+        this.teacher_name = teacher_name;
+    }
+
 
     public class StudentDetails{
         private String student_id;
         private String roll_no;
         private String student_name;
         private String student_photo;
+        private String attendance;
         private boolean isChecked = true;
 
 
@@ -74,6 +102,14 @@ public class StudentList {
 
         public void setChecked(boolean checked) {
             isChecked = checked;
+        }
+
+        public String getAttendance() {
+            return attendance;
+        }
+
+        public void setAttendance(String attendance) {
+            this.attendance = attendance;
         }
     }
 

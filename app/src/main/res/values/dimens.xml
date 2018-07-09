@@ -23,6 +23,10 @@
     <dimen name="student_name_size">15dp</dimen>
     <dimen name="student_name_roll_no">15dp</dimen>
 
+    <dimen name="student_search_height">35dp</dimen>
+
+
+
 
 
 

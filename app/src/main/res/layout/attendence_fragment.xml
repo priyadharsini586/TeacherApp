@@ -22,7 +22,7 @@
             <EditText
                 android:id="@+id/student_search_edit"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/student_search_height"
                 android:hint="Search For Student "
                 android:background="@drawable/button_corner_search" />
 
@@ -48,7 +48,7 @@
                 <Spinner
                     android:id="@+id/select_class_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="@dimen/student_search_height">
 
                 </Spinner>
 
@@ -63,7 +63,7 @@
                 <Spinner
                     android:id="@+id/select_sec_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="@dimen/student_search_height">
                 </Spinner>
 
             </LinearLayout>

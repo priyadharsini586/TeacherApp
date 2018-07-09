@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ import com.nickteck.teacherapp.utilclass.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,8 +64,9 @@ public class AttendenceFragment extends Fragment {
     ArrayList<StudentList.StudentDetails> studentDetailsArrayList;
     RecyclerView attendence_recyclerview;
     AttendenceAdapter attendenceAdapter;
-    TextView txtNoDataTextview;
+    public static TextView txtNoDataTextview;
     EditText student_search_edit;
+    private String current_date;
 
 
     public AttendenceFragment() {
@@ -275,12 +279,15 @@ public class AttendenceFragment extends Fragment {
 
     private void getStudentListApi(String getSelectedClassValue, String getSelectedSectionValue) {
         if (isNetworkConnected) {
+            getCurrentDate();
             apiInterface = ApiClient.getClient().create(ApiInterface.class);
             JSONObject jsonObject = new JSONObject();
             try{
                 jsonObject.put("class_name",getSelectedClassValue);
                 jsonObject.put("section",getSelectedSectionValue);
-
+                jsonObject.put("attndnce_date",current_date);
+                String current_date1 = current_date;
+                Toast.makeText(getActivity(), ""+current_date1, Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
             }
@@ -301,6 +308,7 @@ public class AttendenceFragment extends Fragment {
                                     studentDetails.setStudent_id(studentList.getStudent_details().get(i).getStudent_id());
                                     studentDetails.setStudent_name(studentList.getStudent_details().get(i).getStudent_name());
                                     studentDetails.setStudent_photo(studentList.getStudent_details().get(i).getStudent_photo());
+                                    studentDetails.setAttendance(studentList.getStudent_details().get(i).getAttendance());
                                     studentDetailsArrayList.add(studentDetails);
                                 }
                                 if(studentDetailsArrayList.size()>0){
@@ -329,6 +337,13 @@ public class AttendenceFragment extends Fragment {
         }
     }
 
+    private void getCurrentDate() {
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
+        Date todayDate = new Date();
+         current_date = currentDate.format(todayDate);
+        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+    }
+
     private void setAdapter() {
         attendenceAdapter  = new AttendenceAdapter(getActivity(),studentDetailsArrayList,getActivity());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -341,25 +356,31 @@ public class AttendenceFragment extends Fragment {
     private void filterData() {
 
         student_search_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    try{
+                        attendenceAdapter.getFilter().filter(s.toString());
+                    }catch (Exception e){
+                        Log.d("","");
+                    }
 
-                attendenceAdapter.getFilter().filter(s.toString());
+                }
 
-               // attendence_recyclerview.setAdapter(attendenceAdapter);
-                attendenceAdapter.notifyDataSetChanged();
-            }
+                @Override
+                public void afterTextChanged(Editable s) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
 
-            }
-        });
+                }
+            });
+
+
+
+
     }
 
 

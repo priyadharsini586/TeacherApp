@@ -16,12 +16,20 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.flexbox.FlexboxLayout;
 import com.nickteck.teacherapp.R;
 import com.nickteck.teacherapp.adapter.ClassAdapter;
@@ -39,7 +47,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +74,11 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
     ArrayList<StudentList.StudentDetails>studentDetailList = new ArrayList<>();
     ArrayList<StudentList.StudentDetails>tempStudentDetailList = new ArrayList<>();
     RadioButton radioAll,radioSelected;
+    EditText edtText;
+    Button btnsubmit;
+    private String editText;
+    private List<String> selectedStudentArrayList;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +89,8 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
         spnSection = (Spinner) mainView.findViewById(R.id.section_spinner);
 
         flexLayout = (FlexboxLayout) mainView.findViewById(R.id.flexLayout);
+        edtText = (EditText) mainView.findViewById(R.id.editMessage);
+        btnsubmit = (Button) mainView.findViewById(R.id.btnsubmit);
 
         radioOptions = (RadioGroup) mainView.findViewById(R.id.radioOptions);
         radioAll = (RadioButton) mainView.findViewById(R.id.radioAll);
@@ -84,6 +102,13 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                 setSelectedStudent();
             }
         });
+
+        btnsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessageToServer();
+            }
+        });
         radioSelected = (RadioButton)mainView.findViewById(R.id.radioSelected);
         radioSelected.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +116,8 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                 getSelectedStudent();
             }
         });
+
+
 
         MyApplication.getInstance().setConnectivityListener(this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -145,6 +172,62 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                 }
             });
         }
+    }
+
+    public void sendMessageToServer() {
+
+         editText = edtText.getText().toString();
+        if(editText.length()>0){
+            sendNotification();
+        }else {
+            Toast.makeText(getActivity(), "Text is empty", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void sendNotification() {
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        JSONObject jsonObject = new JSONObject();
+        JSONObject studentData = new JSONObject();
+        JSONObject data = new JSONObject();
+        String studentIdlist = Arrays.deepToString(selectedStudentArrayList.toArray());
+        Log.e("student id",studentIdlist);
+        try{
+            studentData.put("messge",editText);
+            studentData.put("student_id",studentIdlist);
+            data.put("data", studentData);
+            jsonObject.put("to", "/topics/"+studentIdlist);
+            jsonObject.put("data", data);
+        }catch (JSONException e){
+
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.GCMURL, jsonObject,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("get String", String.valueOf(response));
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("get String", String.valueOf(error));
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=" + Constants.API_KEY);
+                return headers;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+
+
     }
 
     public void setSpinner(){
@@ -216,11 +299,13 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                             if (studentDetails.getStatus_code() != null) {
                                 if (studentDetails.getStatus_code().equals(Constants.SUCESS)) {
                                     studentDetailList =new ArrayList<>();
+                                    selectedStudentArrayList = new ArrayList<>();
                                     for (int i =0 ; i< studentDetails.getStudent_details().size() ; i++){
-                                        StudentList.StudentDetails details = studentDetails.getStudent_details().get(i);
+                                        final StudentList.StudentDetails details = studentDetails.getStudent_details().get(i);
                                         details.setChecked(false);
                                         studentDetailList.add(details);
                                         tempStudentDetailList.add(details);
+                                        selectedStudentArrayList.add(details.getStudent_id());
                                         final LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                         final View v = vi.inflate(R.layout.add_student_row, null);
                                         TextView txtStudentName = v.findViewById(R.id.txtStudentName);
@@ -230,6 +315,10 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                                             @Override
                                             public void onClick(View view) {
                                                 ((ViewManager)v.getParent()).removeView(v);
+                                                if (selectedStudentArrayList.contains(details.getStudent_id())) {
+                                                    selectedStudentArrayList.remove(details.getStudent_id());
+                                                    Log.e("selected id", details.getStudent_id());
+                                                }
                                             }
                                         });
                                         flexLayout.addView(v);
@@ -295,6 +384,7 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
 
 
     public void setSelectedStudent(){
+        selectedStudentArrayList = new ArrayList<>();
         flexLayout.removeAllViews();
         for (int i = 0 ; i < studentDetailList.size() ; i ++){
             final StudentList.StudentDetails details = studentDetailList.get(i);
@@ -302,12 +392,19 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
             final View v = vi.inflate(R.layout.add_student_row, null);
             TextView txtStudentName = v.findViewById(R.id.txtStudentName);
             txtStudentName.setText(details.getStudent_name());
+            selectedStudentArrayList.add(details.getStudent_id());
+            String selectedStudentid =  Arrays.deepToString(selectedStudentArrayList.toArray());
+            Toast.makeText(getActivity(), ""+selectedStudentid, Toast.LENGTH_SHORT).show();
             final ImageView imgRemoveView = v.findViewById(R.id.imgRemoveView);
             imgRemoveView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     details.setChecked(false);
                     ((ViewManager)v.getParent()).removeView(v);
+                    if (selectedStudentArrayList.contains(details.getStudent_id())) {
+                        selectedStudentArrayList.remove(details.getStudent_id());
+                        Log.e("selected id", details.getStudent_id());
+                    }
                 }
             });
             flexLayout.addView(v);

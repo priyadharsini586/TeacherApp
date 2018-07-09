@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "772179724838",
+    "firebase_url": "https://schoolapp-208506.firebaseio.com",
+    "project_id": "schoolapp-208506",
+    "storage_bucket": "schoolapp-208506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772179724838:android:81cecfa8b103005c",
+        "android_client_info": {
+          "package_name": "com.nicktech.busdriverapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772179724838-9u1gknu9e5pc7935v5udl4b6mvfqa1qv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nicktech.busdriverapp",
+            "certificate_hash": "f82bf517c9a3121b5816cd06b32971f682d86356"
+          }
+        },
+        {
+          "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODXBqKCwZ5CgA6dhddEM_dx8RVwIOo08"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772179724838:android:5fcb1d2e3ca92193",
+        "android_client_info": {
+          "package_name": "com.nickteck.schoolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772179724838-94a0f6dg48qmidrfitchupo665r1a5hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nickteck.schoolapp",
+            "certificate_hash": "f82bf517c9a3121b5816cd06b32971f682d86356"
+          }
+        },
+        {
+          "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODXBqKCwZ5CgA6dhddEM_dx8RVwIOo08"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772179724838:android:fb998296a2fffb57",
+        "android_client_info": {
+          "package_name": "com.nickteck.teacherapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772179724838-nuk6pe5popjej6ju4tdm8pcrcrdf6ri2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nickteck.teacherapp",
+            "certificate_hash": "7d67b9e6b5d27ded4c0644607cfba0057d425327"
+          }
+        },
+        {
+          "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODXBqKCwZ5CgA6dhddEM_dx8RVwIOo08"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772179724838-tqcabrc8j6c0navj2t5fn00dtk190rm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
