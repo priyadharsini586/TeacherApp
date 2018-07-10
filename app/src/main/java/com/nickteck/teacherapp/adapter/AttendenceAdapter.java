@@ -71,13 +71,13 @@ public class AttendenceAdapter extends RecyclerView.Adapter<AttendenceAdapter.Vi
 
         if(studentDetails.getAttendance().equals("")){
             holder.button_status.setBackgroundResource(R.drawable.custom_attendance_green);
-            for(int i=0; i<studentDetails.getStudent_id().length(); i++){
+            /*for(int i=0; i<studentDetails.getStudent_id().length(); i++){
                 StudentIdAttendenceStatus.StudentAttendeceDetails idAttendenceStatus = new StudentIdAttendenceStatus.StudentAttendeceDetails(studentDetails.getStudent_id(),"1");
                 studentIdArrayListData1.add(idAttendenceStatus);
-                /*studentIdArrayListData.add(studentDetails.getStudent_id());
-                studentAttendenceListData.add("1");*/
+                *//*studentIdArrayListData.add(studentDetails.getStudent_id());
+                studentAttendenceListData.add("1");*//*
             }
-            setAttendenceArrayList();
+            setAttendenceArrayList();*/
 
         } else if(studentDetails.getAttendance().equals("1")){
             holder.button_status.setBackgroundResource(R.drawable.custom_attendance_green);
