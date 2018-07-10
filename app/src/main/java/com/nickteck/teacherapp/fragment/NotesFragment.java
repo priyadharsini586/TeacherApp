@@ -191,13 +191,13 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
         JSONObject studentData = new JSONObject();
         JSONObject data = new JSONObject();
         String studentIdlist = Arrays.deepToString(selectedStudentArrayList.toArray());
+        studentIdlist = studentIdlist.substring(1,studentIdlist.length()  -1);
         Log.e("student id",studentIdlist);
         try{
             studentData.put("messge",editText);
-            studentData.put("student_id",studentIdlist);
-            data.put("data", studentData);
-            jsonObject.put("to", "/topics/"+studentIdlist);
-            jsonObject.put("data", data);
+            jsonObject.put("to", "/topics/studentNote");
+            studentData.put("student_id","'"+studentIdlist + "'");
+            jsonObject.put("data", studentData);
         }catch (JSONException e){
 
         }
@@ -206,6 +206,7 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         Log.e("get String", String.valueOf(response));
 
                     }

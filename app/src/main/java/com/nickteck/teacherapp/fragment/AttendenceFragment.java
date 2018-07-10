@@ -141,6 +141,8 @@ public class AttendenceFragment extends Fragment {
                         if (details.getStatus_code() != null) {
                             if (details.getStatus_code().equals(Constants.SUCESS)) {
                                 if(details.getClass_details().size()>0){
+                                    class_name_arrayList = new ArrayList<>();
+                                    commonArrayList = new ArrayList<>();
                                     for(int i=0; i<details.getClass_details().size();i++){
 
                                         String attendenceClassDetails = details.getClass_details().get(i).getClass_name();
@@ -302,6 +304,9 @@ public class AttendenceFragment extends Fragment {
                         StudentList studentList = response.body();
                         if (studentList.getStatus_code() != null) {
                             if(studentList.getStatus_code().equals(Constants.SUCESS)) {
+                                studentDetailsArrayList = new ArrayList<>();
+                                txtNoDataTextview.setVisibility(View.INVISIBLE);
+                                attendence_recyclerview.setVisibility(View.GONE);
                                 for(int i=0; i<studentList.getStudent_details().size();i++){
                                     StudentList.StudentDetails studentDetails = studentList.getStudent_details().get(i);
                                     studentDetails.setRoll_no(studentList.getStudent_details().get(i).getRoll_no());
@@ -315,9 +320,11 @@ public class AttendenceFragment extends Fragment {
                                     txtNoDataTextview.setVisibility(View.INVISIBLE);
                                     progress.setVisibility(View.INVISIBLE);
                                     setAdapter();
+                                    attendence_recyclerview.setVisibility(View.VISIBLE);
                                 }
                             }else {
                                 txtNoDataTextview.setVisibility(View.VISIBLE);
+                                attendence_recyclerview.setVisibility(View.INVISIBLE);
                                 progress.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getActivity(), "Students are Not Available for this class and section", Toast.LENGTH_SHORT).show();
                             }

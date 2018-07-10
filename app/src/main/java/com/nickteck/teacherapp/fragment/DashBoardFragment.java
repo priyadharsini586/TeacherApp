@@ -270,9 +270,6 @@ public class DashBoardFragment extends Fragment {
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
     }
 
 
