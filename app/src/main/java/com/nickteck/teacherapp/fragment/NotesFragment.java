@@ -37,12 +37,15 @@ import com.nickteck.teacherapp.adapter.StudentListAdapter;
 import com.nickteck.teacherapp.additional_class.HelperClass;
 import com.nickteck.teacherapp.api.ApiClient;
 import com.nickteck.teacherapp.api.ApiInterface;
+import com.nickteck.teacherapp.database.DataBaseHandler;
 import com.nickteck.teacherapp.model.AttendenceClassDetails;
 import com.nickteck.teacherapp.model.StudentList;
 import com.nickteck.teacherapp.service.MyApplication;
 import com.nickteck.teacherapp.service.NetworkChangeReceiver;
 import com.nickteck.teacherapp.utilclass.Constants;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,7 +79,7 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
     RadioButton radioAll,radioSelected;
     EditText edtText;
     Button btnsubmit;
-    private String editText;
+    private String editText,strTeacherName;
     private List<String> selectedStudentArrayList;
 
     @Override
@@ -193,11 +196,13 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
         String studentIdlist = Arrays.deepToString(selectedStudentArrayList.toArray());
         studentIdlist = studentIdlist.substring(1,studentIdlist.length()  -1);
         Log.e("student id",studentIdlist);
+        getTeacherDetails();
         try{
-            studentData.put("messge",editText);
+            studentData.put("messge","\""+editText + "\"");
+            studentData.put("fromId","\""+strTeacherName + "\"");
             jsonObject.put("to", "/topics/studentNote");
-            studentData.put("student_id","'"+studentIdlist + "'");
-            jsonObject.put("data", studentData);
+            studentData.put("student_id","\""+studentIdlist + "\"");
+            jsonObject.put("data", studentData );
         }catch (JSONException e){
 
         }
@@ -411,5 +416,21 @@ public class NotesFragment extends Fragment implements NetworkChangeReceiver.Con
             flexLayout.addView(v);
         }
 
+    }
+
+    public void getTeacherDetails(){
+        DataBaseHandler dataBaseHandler = new DataBaseHandler(getActivity());
+        String getParentDetails = dataBaseHandler.getTeacherDetails();
+        try {
+            JSONObject getParentObject = new JSONObject(getParentDetails);
+            JSONArray parentArray = getParentObject.getJSONArray("teacher_details");
+            for (int i =0 ; i < parentArray.length() ; i ++) {
+                JSONObject jsonObject = parentArray.getJSONObject(i);
+                strTeacherName = jsonObject.getString("name");
+            }
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
